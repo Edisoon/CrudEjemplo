@@ -1,0 +1,72 @@
+﻿
+
+<EditForm EditContext="editContext" OnInvalidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator/>
+
+    <div class="row align-items-center justify-content-md-center">
+
+        <div class="form-group row mb-3">
+            <label class="col-md-auto col-form-label ">Nombre:</label>
+            <div class="col-sm-7">
+                <InputText placeholder="Escribe el nombre" class="form-control" @bind-Value="Person.Name" />
+                <ValidationMessage For="@(()=> Person.Name)" />
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label class="col-md-auto col-form-label">Apellido:</label>
+            <div class="col-sm-7">
+                <InputText placeholder="Escribe el Apellido" class="form-control" @bind-Value="Person.LastName" />
+                <ValidationMessage For="@(()=> Person.LastName)" />
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label class="col-sm-auto col-form-label">Edad:</label>
+            <div class="col-sm-1 mx-3">
+                <InputNumber placeholder="Escribe tu edad" class="form-control" @bind-Value="Person.Age" />
+                <ValidationMessage For="@(()=> Person.Age)" />
+            </div>
+            <div class="form-group col-md-8 mx-5">
+                <label class="col-sm-1 col-form-label">Sexo:</label>
+                <InputRadioGroup Name="sexo" class="form-control" @bind-Value="Person.gender">
+                    <InputRadio Name="sexo" Value="@("Masculino")" /> Masculino
+                    <InputRadio Name="sexo" Value="@("Femenino")" /> Femenino
+                    <InputRadio Name="sexo" Value="@("No especificar")" /> No especicar
+                    <ValidationMessage For="@(()=> Person.gender)" />
+                </InputRadioGroup>
+            </div>
+        </div>
+
+        <div class="form-group row mb-6 align-items-center">
+            <div class="col-md-auto">
+                <button @onclick="ReturnAction" class="btn  btn-success px-2 py-3 oi oi-arrow-left"></button>
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn  btn-primary ">Crear</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+
+@code {
+    private EditContext editContext = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public Person Person { get; set; } = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnValidSubmit { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback ReturnAction { get; set; }
+
+    protected override void OnInitialized()
+    {
+        editContext = new(Person);
+    }
+
+}

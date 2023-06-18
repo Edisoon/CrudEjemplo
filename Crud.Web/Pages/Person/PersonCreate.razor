@@ -1,0 +1,23 @@
+﻿@page "/person/create"
+@inject NavigationManager navigationManager
+
+<h3>Crear Persona</h3>
+<PersonForm @ref="personForm" Person="person" OnValidSubmit="Create" ReturnAction="Return">
+
+</PersonForm>
+
+@code {
+    private Person person = new();
+    private PersonForm? personForm;
+
+
+    private async Task Create()
+    {
+        return;
+    }
+
+    private void Return()
+    {
+        navigationManager.NavigateTo("/person");
+    }
+}

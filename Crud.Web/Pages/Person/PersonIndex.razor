@@ -1,0 +1,101 @@
+﻿@page "/person"
+
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+            <h3>Persona</h3>
+        </div>
+        <div class="col-md-auto">
+            <a class="btn btn-primary oi oi-plus" href="/person/create"></a>
+        </div>
+    </div>
+</div>
+
+@*<GenericList MyList="People">
+    <Body>
+        
+    </Body>
+
+</GenericList>
+*@
+@if(People is null)
+{
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <img class="align-items-center col-auto" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" />
+            </div>
+        </div>
+    </div>
+}else if(People.Count == 0)
+{
+    <div class="align-items-center">
+        <h5 class="col-auto text-center">No hay registros para mostrar</h5>
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Edad</th>
+                <th>Genero</th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var people in People!)
+            {
+                <tr>
+                    <td>
+                        @people.Name
+                    </td>
+                    <td>
+                        @people.LastName
+                    </td>
+                    <td>
+                        @people.Age
+                    </td>
+                    <td>
+                        @people.gender
+                    </td>
+                    <td>
+                        <a class="btn btn-warning oi oi-pencil"></a>
+                        <button class="btn btn-danger oi oi-trash"></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+
+@code {
+    public List<Person>? People { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        //People = new List<Person>();
+        People = GetPeople();
+        //return base.OnInitializedAsync();
+    }
+
+    List<Person> GetPeople()
+    {
+        return new List<Person>()
+        {
+            new Person
+            {
+                Name="Edison",
+                LastName="Lopez",
+                Age=30,
+                gender="Masculino",
+            }
+        };
+    }
+}
